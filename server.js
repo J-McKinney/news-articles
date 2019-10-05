@@ -50,10 +50,14 @@ app.set("view engine", "handlebars");
 
 // Connect to the Mongo DB
 // mongoose.connect("mongodb://heroku_hjd2jb8f:6jiuccbv0oth9j8t7odenmj3kd@ds123331.mlab.com:23331/heroku_hjd2jb8f");
-mongoose.connect("mongodb://localhost/NewsScraperHW", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+// mongoose.connect("mongodb://localhost/NewsScraperHW", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// });
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+mongoose.connect(MONGODB_URI);
 
 // Show any mongoose errors
 mongoose.connection.on("error", function(error) {
