@@ -4,7 +4,6 @@ $("#scrape").on("click", function() {
     method: "GET",
     url: "/scrape"
   }).then(function(data) {
-    console.log(data);
     window.location = "/";
   });
 });
@@ -50,8 +49,6 @@ $(".saveNote").on("click", function() {
         text: $("#noteText" + thisId).val()
       }
     }).then(function(data) {
-      // Log the response
-      console.log(data);
       // Empty the notes section
       $("#noteText" + thisId).val("");
       $(".modalNote").modal("hide");
@@ -68,7 +65,6 @@ $(".deleteNote").on("click", function() {
     method: "DELETE",
     url: "/notes/delete/" + noteId + "/" + articleId
   }).then(function(data) {
-    console.log(data);
     $(".modalNote").modal("hide");
     window.location = "/saved";
   });

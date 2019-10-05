@@ -13,6 +13,9 @@ var Article = require("./models/Article.js");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
+// Require all models
+var db = require("./models");
+
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = Promise;
 
@@ -26,7 +29,7 @@ var app = express();
 app.use(morgan("dev"));
 app.use(
   bodyParser.urlencoded({
-    extended: false
+    extended: true
   })
 );
 
@@ -48,22 +51,22 @@ app.set("view engine", "handlebars");
 // Database configuration with mongoose
 //// mongoose.connect("mongodb://heroku_hjd2jb8f:6jiuccbv0oth9j8t7odenmj3kd@ds123331.mlab.com:23331/heroku_hjd2jb8f");
 mongoose.connect("mongodb://localhost/NewsScraperHW", {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 });
-var db = mongoose.connection;
+// var db = mongoose.connection;
 
 // Show any mongoose errors
-db.on("error", function(error) {
+mongoose.connection.on("error", function(error) {
   console.log("Mongoose Error: ", error);
 });
 
 // Once logged in to the db through mongoose, log a success message
-db.once("open", function() {
+mongoose.connection.once("open", function() {
   console.log("Mongoose connection successful.");
 });
 
 // Routes
-// ======
 
 //GET requests to render Handlebars pages
 app.get("/", function(req, res) {
@@ -94,7 +97,7 @@ app.get("/scrape", function(req, res) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(html);
     // Now, we grab every h2 within an article tag, and do the following:
-    $("article").each(function(i, element) {
+    $("article h2").each(function(i, element) {
       // Save an empty result object
       var result = {};
 
@@ -138,7 +141,7 @@ app.get("/scrape", function(req, res) {
         }
       });
     });
-    // Tell the browser that we finished scraping the text
+    // Send a message to the client
     res.send("Scrape Complete");
   });
 });
@@ -217,7 +220,7 @@ app.post("/notes/save/:id", function(req, res) {
     article: req.params.id
   });
   console.log(req.body);
-  // And save the new note the db
+  // And save the new note to the db
   newNote.save(function(error, note) {
     // Log any errors
     if (error) {
