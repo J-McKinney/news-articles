@@ -10,9 +10,13 @@ var Note = require("./models/Note.js");
 var Article = require("./models/Article.js");
 
 // Our scraping tools
-// request is a promised-based http library, similar to jQuery's Ajax method
-// It works on the client and on the server
+// ???Axios VS Request???
+// var axios = require("axios");
 var request = require("request");
+// ???Axios VS Request???
+// Request is designed to be the simplest way possible to make http calls. It supports HTTPS and follows redirects by default.
+// request supports both streaming and callback interfaces natively. If you'd like request to return a Promise instead, you can use an alternative interface wrapper for request. These wrappers can be useful if you prefer to work with Promises, or if you'd like to use async/await
+// It’s flexible and easy to use, Uses promises to avoid callback hell, It has a nice and simple syntax
 var cheerio = require("cheerio");
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
