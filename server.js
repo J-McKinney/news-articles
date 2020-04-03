@@ -49,7 +49,6 @@ app.engine(
 app.set("view engine", "handlebars");
 
 // Connect to the Mongo DB
-// mongoose.connect("mongodb://heroku_hjd2jb8f:6jiuccbv0oth9j8t7odenmj3kd@ds123331.mlab.com:23331/heroku_hjd2jb8f");
 // mongoose.connect("mongodb://localhost/NewsScraperHW", {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true
